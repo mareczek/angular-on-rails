@@ -18,3 +18,7 @@ day: 1, month: 5, year: 2017)
 
 Event.create!(title: "Wydarzenie3", location: "Lodz",
 day: 3, month: 6, year: 2017)
+
+
+Event.create!(title: "Wydarzenie4", location: "Lodz",
+day: 3, month: 6, year: 2017)

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core'
+import { Router } from '@angular/router';
 import { Event } from './event'
 import { EventService } from './event.service'
-import { Observable } from 'rxjs/Rx'
+
 
 @Component({
     moduleId: module.id,
@@ -12,27 +13,21 @@ import { Observable } from 'rxjs/Rx'
 
 
 export class EventComponent implements OnInit {
-
     events: Event[];
-    errorMessage: string;
-    mode = "Observable"
+   
 
-    constructor(private eventservice: EventService
-    ) {
+    constructor(
+        private eventService: EventService,
+        private router: Router) { }
+
+    getEvents(): void {
+        this.eventService
+            .getEvents()
+            .then(events => this.events = events);
     }
 
     ngOnInit(): void {
-        let timer = Observable.timer(0, 10000);
-        timer.subscribe(() => this.getEvents());
+        this.getEvents();
     }
-
-
-
-    getEvents() {
-        this.eventservice.getEvents()
-            .subscribe(events => this.events = events,
-            error => this.errorMessage = <any>error)
-    };
-
 
 }

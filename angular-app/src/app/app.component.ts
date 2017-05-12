@@ -4,7 +4,6 @@ import { Component } from '@angular/core';
   moduleId: module.id,
   selector: 'my-app',
   templateUrl: 'app.component.html'
-  
 
 })
-export class AppComponentd  {  }
+export class AppComponent {  }

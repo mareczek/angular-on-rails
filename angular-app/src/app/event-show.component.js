@@ -10,15 +10,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
+var common_1 = require("@angular/common");
+var event_service_1 = require("./event.service");
 var EventShowComponent = (function () {
-    function EventShowComponent(route) {
+    function EventShowComponent(eventService, route, location) {
+        this.eventService = eventService;
         this.route = route;
+        this.location = location;
     }
     EventShowComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.routeId = this.route.params.subscribe(function (params) {
-            _this.id = +params['id'];
-        });
+        this.route.params
+            .switchMap(function (params) { return _this.eventService.getEvent(+params['id']); })
+            .subscribe(function (event) { return _this.event = event; });
     };
     return EventShowComponent;
 }());
@@ -26,9 +30,12 @@ EventShowComponent = __decorate([
     core_1.Component({
         moduleId: module.id,
         selector: 'event-show',
-        templateUrl: 'event-show.component.html'
+        templateUrl: 'event-show.component.html',
+        providers: [event_service_1.EventService]
     }),
-    __metadata("design:paramtypes", [router_1.ActivatedRoute])
+    __metadata("design:paramtypes", [event_service_1.EventService,
+        router_1.ActivatedRoute,
+        common_1.Location])
 ], EventShowComponent);
 exports.EventShowComponent = EventShowComponent;
 //# sourceMappingURL=event-show.component.js.map

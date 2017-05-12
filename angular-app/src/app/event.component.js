@@ -9,24 +9,22 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
+var router_1 = require("@angular/router");
 var event_service_1 = require("./event.service");
-var Rx_1 = require("rxjs/Rx");
 var EventComponent = (function () {
-    function EventComponent(eventservice) {
-        this.eventservice = eventservice;
-        this.mode = "Observable";
+    function EventComponent(eventService, router) {
+        this.eventService = eventService;
+        this.router = router;
     }
-    EventComponent.prototype.ngOnInit = function () {
-        var _this = this;
-        var timer = Rx_1.Observable.timer(0, 10000);
-        timer.subscribe(function () { return _this.getEvents(); });
-    };
     EventComponent.prototype.getEvents = function () {
         var _this = this;
-        this.eventservice.getEvents()
-            .subscribe(function (events) { return _this.events = events; }, function (error) { return _this.errorMessage = error; });
+        this.eventService
+            .getEvents()
+            .then(function (events) { return _this.events = events; });
     };
-    ;
+    EventComponent.prototype.ngOnInit = function () {
+        this.getEvents();
+    };
     return EventComponent;
 }());
 EventComponent = __decorate([
@@ -36,7 +34,8 @@ EventComponent = __decorate([
         templateUrl: 'event.component.html',
         providers: [event_service_1.EventService]
     }),
-    __metadata("design:paramtypes", [event_service_1.EventService])
+    __metadata("design:paramtypes", [event_service_1.EventService,
+        router_1.Router])
 ], EventComponent);
 exports.EventComponent = EventComponent;
 //# sourceMappingURL=event.component.js.map

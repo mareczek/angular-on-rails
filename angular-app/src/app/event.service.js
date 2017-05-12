@@ -10,29 +10,38 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require("@angular/core");
 var http_1 = require("@angular/http");
-var Rx_1 = require("rxjs/Rx");
+require("rxjs/add/operator/switchMap");
+require("rxjs/add/operator/toPromise");
 var EventService = (function () {
     function EventService(http) {
         this.http = http;
-        this.eventsUrl = "http://localhost:3005/events";
+        this.headers = new http_1.Headers({
+            'Content-Type': 'application/json'
+        });
+        this.URL = 'http://localhost:3005/events';
     }
     EventService.prototype.getEvents = function () {
-        return this.http.get(this.eventsUrl)
-            .map(function (response) { return response.json(); })
+        return this.http.get(this.URL)
+            .toPromise()
+            .then(function (response) { return response.json(); })
+            .catch(this.handleError);
+    };
+    EventService.prototype.getEvent = function (id) {
+        var url = this.URL + "/" + id;
+        return this.http.get(url)
+            .toPromise()
+            .then(function (response) { return response.json(); });
+    };
+    EventService.prototype.createEvent = function (event) {
+        return this.http
+            .post(this.URL, JSON.stringify({ event: event }), { headers: this.headers })
+            .toPromise()
+            .then(function (res) { return res.json().data; })
             .catch(this.handleError);
     };
     EventService.prototype.handleError = function (error) {
-        var errMsg;
-        if (error instanceof http_1.Response) {
-            var body = error.json() || '';
-            var er = body.error || JSON.stringify(body);
-            errMsg = '${error.status} - ${error.statusText || " } ${err} ';
-        }
-        else {
-            errMsg = error.message ? error.message : error.toString();
-        }
-        console.error(errMsg);
-        return Rx_1.Observable.throw(errMsg);
+        console.error('An error occurred', error); // for demo purposes only
+        return Promise.reject(error.message || error);
     };
     return EventService;
 }());

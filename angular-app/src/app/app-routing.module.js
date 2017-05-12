@@ -12,11 +12,29 @@ var event_component_1 = require("./event.component");
 var event_new_component_1 = require("./event-new.component");
 var event_show_component_1 = require("./event-show.component");
 var routes = [
-    { path: '', redirectTo: '/calendar', pathMatch: 'full' },
-    { path: 'calendar', component: calendar_component_1.CalendarComponent },
-    { path: 'events', component: event_component_1.EventComponent },
-    { path: 'events/new', component: event_new_component_1.EventNewComponent },
-    { path: 'event/:id', component: event_show_component_1.EventShowComponent }
+    {
+        path: '',
+        redirectTo: '/calendar',
+        pathMatch: 'full'
+    },
+    {
+        path: 'calendar',
+        component: calendar_component_1.CalendarComponent,
+        children: [
+            {
+                path: 'events',
+                component: event_component_1.EventComponent,
+            },
+            {
+                path: 'events/new',
+                component: event_new_component_1.EventNewComponent,
+            },
+            {
+                path: 'events/:id',
+                component: event_show_component_1.EventShowComponent,
+            }
+        ]
+    }
 ];
 var AppRoutingModule = (function () {
     function AppRoutingModule() {

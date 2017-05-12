@@ -6,13 +6,35 @@ import { EventNewComponent } from './event-new.component'
 import { EventShowComponent } from './event-show.component'
 
 const routes: Routes = [
-    { path: '', redirectTo: '/calendar', pathMatch: 'full' },
-    { path: 'calendar', component: CalendarComponent },
-    { path: 'events', component: EventComponent },
-    { path: 'events/new', component: EventNewComponent },
-    { path: 'event/:id', component: EventShowComponent }
+  
 
-]
+    {
+        path: '',
+        redirectTo: '/calendar',
+        pathMatch: 'full'
+      },
+      {
+        path: 'calendar',
+        component: CalendarComponent,
+        children:[
+        {
+         path : 'events',
+         component: EventComponent,
+        },
+        {
+            path: 'events/new',
+            component: EventNewComponent,
+        },
+        {
+            path: 'events/:id',
+            component: EventShowComponent,
+        }
+           
+       ]
+     }
+    ];
+
+
 
 @NgModule({
     imports: [RouterModule.forRoot(routes)],

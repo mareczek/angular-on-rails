@@ -1,7 +1,7 @@
 <h1> Add a new event</h1>
 
 <div>
-    <form #eventForm="ngForm">
+    <form (ngSubmit)="createEvent(event)" #eventForm="ngForm">
         <div class="form-group">
             <label for="title">Title</label>
             <input type="text" id="title" required name="title" #title='ngModel' [(ngModel)]="event.title">
@@ -18,7 +18,14 @@
             <input type="number" min="1" max="12" id="month" required name="month" #month='ngModel' [(ngModel)]="event.month">
 
             <label for="year">Year</label>
-            <input type="number" min="2017" max="2030" id="year" required name="year" #day='ngModel' [(ngModel)]="event.year">
+            <input type="number" min="2017" max="2030" id="year" required name="year" #year='ngModel' [(ngModel)]="event.year">
+        
         </div>
+        <div class="form-group">
+        <label for="time">Time</label>
+            <input type="number" min="0" max="23" id="time" required name="time" #time='ngModel' [(ngModel)]="event.time">
+         </div>
+        
+        <button type="Submit" class="btn btn-primary"[disabled]="!eventForm.form.valid">Add event</button>
     </form>
 </div>
