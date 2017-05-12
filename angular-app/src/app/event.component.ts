@@ -14,7 +14,6 @@ import { EventService } from './event.service'
 
 export class EventComponent implements OnInit {
     events: Event[];
-   
 
     constructor(
         private eventService: EventService,
@@ -29,5 +28,4 @@ export class EventComponent implements OnInit {
     ngOnInit(): void {
         this.getEvents();
     }
-
 }

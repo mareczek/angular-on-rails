@@ -14,6 +14,7 @@ var EventNewComponent = (function () {
     function EventNewComponent(eventservice) {
         this.eventservice = eventservice;
         this.event = {};
+        this.dateNow = new Date();
     }
     EventNewComponent.prototype.createEvent = function (event) {
         this.eventservice.createEvent(event);

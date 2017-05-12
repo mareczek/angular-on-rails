@@ -31,26 +31,19 @@ export class EventService {
         return this.http.get(url)
             .toPromise()
             .then(response => response.json() as Event)
-
+            .catch(this.handleError)
     }
-
 
     createEvent(event: Event): Promise<Event> {
         return this.http
-            .post(this.URL, JSON.stringify({event}), { headers: this.headers })
+            .post(this.URL, JSON.stringify({ event }), { headers: this.headers })
             .toPromise()
             .then(res => res.json().data as Event)
             .catch(this.handleError);
     }
 
-
-
-
-
-
-
     private handleError(error: any): Promise<any> {
-        console.error('An error occurred', error); // for demo purposes only
+        console.error('An error occurred', error);
         return Promise.reject(error.message || error);
     }
 

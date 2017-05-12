@@ -30,7 +30,8 @@ var EventService = (function () {
         var url = this.URL + "/" + id;
         return this.http.get(url)
             .toPromise()
-            .then(function (response) { return response.json(); });
+            .then(function (response) { return response.json(); })
+            .catch(this.handleError);
     };
     EventService.prototype.createEvent = function (event) {
         return this.http
@@ -40,7 +41,7 @@ var EventService = (function () {
             .catch(this.handleError);
     };
     EventService.prototype.handleError = function (error) {
-        console.error('An error occurred', error); // for demo purposes only
+        console.error('An error occurred', error);
         return Promise.reject(error.message || error);
     };
     return EventService;

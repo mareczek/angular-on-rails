@@ -12,10 +12,11 @@ import { EventService } from './event.service'
 export class EventNewComponent {
     event: Event = {
     }
-
+    dateNow = new Date();
+    
     constructor(private eventservice: EventService) { }
 
-    createEvent(event: Event) {
+    createEvent(event) {
         this.eventservice.createEvent(event);
     }
 

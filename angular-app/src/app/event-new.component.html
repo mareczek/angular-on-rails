@@ -1,31 +1,31 @@
-<h1> Add a new event</h1>
+<div class="center-block text-center">
 
-<div>
-    <form (ngSubmit)="createEvent(event)" #eventForm="ngForm">
-        <div class="form-group">
-            <label for="title">Title</label>
-            <input type="text" id="title" required name="title" #title='ngModel' [(ngModel)]="event.title">
-        </div>
-        <div class="form-group">
-            <label for="location">Location</label>
-            <input type="text" id="location" name="location" #location='ngModel' [(ngModel)]="event.location">
-        </div>
-        <div class="form-group">
-            <label for="day">Day</label>
-            <input type="number" min="1" max="31" id="day" required name="day" #day='ngModel' [(ngModel)]="event.day">
+    <div class="col-md-12">
 
-            <label for="month">Month</label>
-            <input type="number" min="1" max="12" id="month" required name="month" #month='ngModel' [(ngModel)]="event.month">
+        <form (ngSubmit)="createEvent(event)" #eventForm="ngForm">
+            
 
-            <label for="year">Year</label>
-            <input type="number" min="2017" max="2030" id="year" required name="year" #year='ngModel' [(ngModel)]="event.year">
-        
-        </div>
-        <div class="form-group">
-        <label for="time">Time</label>
-            <input type="number" min="0" max="23" id="time" required name="time" #time='ngModel' [(ngModel)]="event.time">
-         </div>
-        
-        <button type="Submit" class="btn btn-primary"[disabled]="!eventForm.form.valid">Add event</button>
-    </form>
+<div class="form-group row">
+    <label for="title" class="col-2 col-form-label">Title</label>
+    <div class="col-10">
+        <input type="text" class="form-control" id="title" required name="title" #title='ngModel' [(ngModel)]="event.title">
+    </div>
 </div>
+<div class="form-group row">
+    <label for="location" class="col-2 col-form-label">Location</label>
+    <div class="col-10">
+        <input type="text" class="form-control" id="location" required name="location" #location='ngModel' [(ngModel)]="event.location">
+    </div>
+</div>
+
+<div class="form-group row">
+  <label for="date-input" class="col-2 col-form-label">Date</label>
+  <div class="col-10">
+    <input class="form-control" type="date" value="" id="date-input" name="eventDate" #date='ngModel' [(ngModel)]="event.eventDate">
+  </div>
+</div>
+
+
+ <button type="Submit" class="btn btn-primary" [disabled]="!eventForm.form.valid">Add event</button>
+        </form>
+    
