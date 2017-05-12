@@ -1,0 +1,24 @@
+<h1> Add a new event</h1>
+
+<div>
+    <form #eventForm="ngForm">
+        <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" id="title" required name="title" #title='ngModel' [(ngModel)]="event.title">
+        </div>
+        <div class="form-group">
+            <label for="location">Location</label>
+            <input type="text" id="location" name="location" #location='ngModel' [(ngModel)]="event.location">
+        </div>
+        <div class="form-group">
+            <label for="day">Day</label>
+            <input type="number" min="1" max="31" id="day" required name="day" #day='ngModel' [(ngModel)]="event.day">
+
+            <label for="month">Month</label>
+            <input type="number" min="1" max="12" id="month" required name="month" #month='ngModel' [(ngModel)]="event.month">
+
+            <label for="year">Year</label>
+            <input type="number" min="2017" max="2030" id="year" required name="year" #day='ngModel' [(ngModel)]="event.year">
+        </div>
+    </form>
+</div>
