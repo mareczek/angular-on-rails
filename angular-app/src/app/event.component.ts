@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { Event } from './event'
 import { EventService } from './event.service'
 
-
 @Component({
     moduleId: module.id,
     selector: 'events',

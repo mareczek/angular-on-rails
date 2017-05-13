@@ -25,6 +25,7 @@
 
       // other libraries
       '@ng-bootstrap/ng-bootstrap': 'node_modules/@ng-bootstrap/ng-bootstrap/bundles/ng-bootstrap.js',
+    'moment': 'node_modules/moment',
 
       'rxjs':                      'npm:rxjs',
       'angular-in-memory-web-api': 'npm:angular-in-memory-web-api/bundles/in-memory-web-api.umd.js'
@@ -41,7 +42,9 @@
       },
       rxjs: {
         defaultExtension: 'js'
-      }
+      },
+  moment: { main: 'moment.js', defaultExtension: 'js' },
+
     }
   });
 })(this);

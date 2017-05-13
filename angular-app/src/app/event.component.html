@@ -11,15 +11,15 @@
       </tr>
     </thead>
     <tbody>
-   <div *ngFor="let ev of events">
-      <tr>
+ 
+      <tr *ngFor="let ev of events">
            
         <td>{{ev.title}}</td>
         <td>{{ev.location}}</td>
         <td>{{ev.eventDate | date:'dd.MM.yyyy'}}</td>     
         
       </tr>
-   </div>
+  
     </tbody>
     
   </table>

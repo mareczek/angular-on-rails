@@ -16,7 +16,7 @@ export class EventNewComponent {
     
     constructor(private eventservice: EventService) { }
 
-    createEvent(event) {
+    createEvent(event: any) {
         this.eventservice.createEvent(event);
     }
 
