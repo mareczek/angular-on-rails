@@ -1,14 +1,26 @@
-.btn {
+.routerlinkbutton {
     background-color: white;
+    margin-bottom: 15px;
 }
 
-table{
-    border: 1px solid black;
-    table-layout: fixed;
-    width: 100px;
+.monthbutton {
+    margin: 10px;
 }
 
-th, td {
-    border: 1px solid black;
-    width: 50px;
+.col-centered{
+    float: none;
+    margin: 0 auto;
+}
+
+table {
+    border-spacing: 0px;
+}
+
+th {
+    background-color: orange;
+}
+
+th, td, tr {
+    text-align: center;
+    border: black solid 1px !important;
 }

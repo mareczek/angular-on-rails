@@ -1,8 +1,6 @@
 <h1> All Events </h1>
 
-
-<div class="table-responsive">
-<table class= "table">
+<table class= "table table-responsive"  >
     <thead>
       <tr>
         <th>Title</th>
@@ -11,16 +9,11 @@
       </tr>
     </thead>
     <tbody>
- 
       <tr *ngFor="let ev of events">
-           
-        <td>{{ev.title}}</td>
-        <td>{{ev.location}}</td>
-        <td>{{ev.eventDate | date:'dd.MM.yyyy'}}</td>     
-        
+        <td align="left">{{ev.title}}</td>
+        <td align="left">{{ev.location}}</td>
+        <td align="left">{{ev.eventDate | date:'dd.MM.yyyy'}}</td>     
       </tr>
-  
     </tbody>
-    
   </table>
-</div>
+

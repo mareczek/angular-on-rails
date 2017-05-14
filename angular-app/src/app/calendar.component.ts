@@ -1,48 +1,67 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import * as moment from 'moment';
 
 @Component({
   moduleId: module.id,
   selector: 'calendar',
   templateUrl: 'calendar.component.html',
-  styleUrls: ['calendar.component.css']
+  styleUrls: ['calendar.component.css'],
+
 })
 
 
 export class CalendarComponent implements OnInit {
   currentDate: Date;
-  currentMonth: any
+  year: number;
+  month: number;
   weekAmount: number;
+  startingDay: number;
   days: any[];
   weeks: any[];
-  startingDay: number;
+  @Input() selectedDay: Date = new Date();
 
-  constructor() {
+  onClick(day : Date) {
+    this.selectedDay = day;
+    console.log(this.selectedDay);
+    
   }
 
 
-
-  setDisplay(date: Date) {
-    this.currentDate = date;
-    var monthNames = ["January", "February", "March", "April", "May", "June",
-      "July", "August", "September", "October", "November", "December"
-    ];
-    this.currentMonth = monthNames[date.getMonth()];
-
+  previousMonth() {
+    console.log('showPreviousMonth');
+    this.month--;
+    if (this.month == (-1)) { this.year--; this.month = 11; }
+    console.log('this month:' + this.month);
+    console.log('this.year: ' + this.year);
+    console.log('this.date =' + this.currentDate);
+    this.initCalendarView(this.year, this.month);
   }
+
+  nextMonth() {
+    console.log('showNextMonth')
+    this.month++;
+    if (this.month == 11) { this.year++; this.month = 0; }
+    console.log('this month:' + this.month);
+    console.log('this.year: ' + this.year);
+    console.log('this.date =' + this.currentDate);
+    this.initCalendarView(this.year, this.month);
+  }
+
 
 
   getWeeksforMonth() {
-    if (this.days.length != 28 || this.startingDay != 1) this.weekAmount = 5;
+    if (this.days.length > 28 || this.startingDay != 1) {
+      if (this.days.length == 31) this.weekAmount = 6;
+      else this.weekAmount = 5;
+    }
     else this.weekAmount = 4;
   }
 
   seperateDaysForWeeks() {
     //fills weeks with arrays of days
-    var days: any; 
-    this.startingDay = this.days[0].getDate();
+    var days: any;
     this.weeks = [this.weekAmount];
-    
+
     for (var j = 0, x = 0; j < this.weekAmount; j++) {
       days = [];
 
@@ -56,48 +75,45 @@ export class CalendarComponent implements OnInit {
       }
       this.weeks.push({ days: days });
     }
-   
-
   }
 
 
   setStartingOffset(days: any[]) {
-    //adds blank days if month doesn't start with monday
+    //adds blank days if month doesn't start with sunday
     for (var z = 0; z < this.startingDay; z++) {
       days.push({ day: null, nr: null });
     }
-    
   }
 
 
   getDaysForMonth() {
     //fills array with days and sets startingDay
-    var currDate = this.currentDate;
-    var date = new Date(currDate.getFullYear(), currDate.getMonth(), 1);
+    var month = this.currentDate.getMonth();
+    var year = this.currentDate.getFullYear();
+
+    var date = new Date(year, month, 1);
     var days = [];
-    while (date.getMonth() === currDate.getMonth()) {
+    while (date.getMonth() === month) {
       days.push(new Date(date));
       date.setDate(date.getDate() + 1);
     }
     this.days = days;
     this.startingDay = this.days[0].getDay();
-    this.numberOfDays = this.getDaysInMonth(this.currentDate.getMonth());
-    console.log(this.numberOfDays);
   }
 
 
-  getDaysInMonth(month: any) {
-    var year = this.currentDate.getFullYear();
-    return new Date(year, month, 0).getDate();
-  }
-
-
-  ngOnInit() {
-    this.setDisplay(new Date());
+  initCalendarView(year: number, month: number, day = 1) {
+    this.currentDate = new Date(year, month, day);
     this.getDaysForMonth();
     this.getWeeksforMonth();
     this.seperateDaysForWeeks()
+  }
 
+  ngOnInit() {
+    var today = new Date();
+    this.year = today.getFullYear();
+    this.month = today.getMonth();
+    this.initCalendarView(this.year, this.month);
   }
 
 }

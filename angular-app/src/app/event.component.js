@@ -32,6 +32,7 @@ EventComponent = __decorate([
         moduleId: module.id,
         selector: 'events',
         templateUrl: 'event.component.html',
+        styleUrls: ['event.component.css'],
         providers: [event_service_1.EventService]
     }),
     __metadata("design:paramtypes", [event_service_1.EventService,

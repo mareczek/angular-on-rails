@@ -11,23 +11,43 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var event_service_1 = require("./event.service");
 var EventNewComponent = (function () {
-    function EventNewComponent(eventservice) {
+    function EventNewComponent(eventservice, ref) {
         this.eventservice = eventservice;
+        this.ref = ref;
         this.event = {};
         this.dateNow = new Date();
+        this.submitted = false;
+        console.log("konstruktor");
+        console.log(this.selectedDay);
     }
+    EventNewComponent.prototype.ngOnInit = function () {
+        console.log("init" + this.selectedDay);
+    };
     EventNewComponent.prototype.createEvent = function (event) {
         this.eventservice.createEvent(event);
+        console.log('old submit' + this.submitted);
+        this.submitted = !this.submitted;
+        console.log('new submit' + this.submitted);
+    };
+    EventNewComponent.prototype.ngOnChanges = function () {
+        {
+            this.ref.markForCheck();
+            console.log('dddddddddddd' + this.selectedDay);
+        }
     };
     return EventNewComponent;
 }());
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", Object)
+], EventNewComponent.prototype, "selectedDay", void 0);
 EventNewComponent = __decorate([
     core_1.Component({
         moduleId: module.id,
         selector: 'event-new',
         templateUrl: 'event-new.component.html',
     }),
-    __metadata("design:paramtypes", [event_service_1.EventService])
+    __metadata("design:paramtypes", [event_service_1.EventService, Object])
 ], EventNewComponent);
 exports.EventNewComponent = EventNewComponent;
 //# sourceMappingURL=event-new.component.js.map

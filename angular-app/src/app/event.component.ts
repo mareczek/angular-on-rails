@@ -7,6 +7,7 @@ import { EventService } from './event.service'
     moduleId: module.id,
     selector: 'events',
     templateUrl: 'event.component.html',
+    styleUrls: ['event.component.css'],
     providers: [EventService]
 })
 

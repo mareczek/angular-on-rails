@@ -1,37 +1,38 @@
-<h4> {{ currentMonth }} </h4>
-<div class="table-responsive">
-    <table class="table" align="center">
+<button type="button" class="btn btn-primary btn-sm monthbutton" (click)="previousMonth()">Previous month</button> 
+{{currentDate|date:'MMMM, yyyy'}}
+<button class="btn btn-primary btn-sm monthbutton" (click)="nextMonth()">Next month</button>
+
+<div class="col-md-6 col-centered">
+    <table class="table">
         <thead>
             <tr>
                 <th>Sun</th>
                 <th>Mon</th>
                 <th>Tue</th>
                 <th>Wed</th>
-                <th>Thur</th>
+                <th>Thu</th>
                 <th>Fri</th>
                 <th>Sat</th>
-               
             </tr>
         </thead>
         <tbody>
-
+            
             <tr *ngFor="let week of weeks">
-                <td *ngFor="let day of week.days">{{ day.nr }} </td>
-                
+                <td *ngFor="let day of week.days">
+                    <div *ngIf="day.day" (click)='onClick(day.day)'>
+                        <button class="btn">{{day.nr}}</button>
+                    </div>
+                </td>
             </tr>
-
         </tbody>
-
     </table>
 </div>
-
-
-<h2> Navigation </h2>
-<div class="btn btn-primary"><a routerLink="events">All events</a> </div>
-
-<div class="btn btn-primary"><a routerLink="events/new">Add Event</a></div>
-
-<br>
-<br>
-
-<router-outlet></router-outlet>
+<event-new hidden [selectedDay]="selectedDay"></event-new>
+<div class="row">
+    <div class="col-md-6 col-centered">
+        <h2> Navigation </h2>
+        <div class="btn  btn-primary routerlinkbutton"><a routerLink="events">All events</a> </div>
+        <div class="btn btn-primary routerlinkbutton"><a routerLink="events/new">Add Event</a></div>
+        <router-outlet></router-outlet>
+    </div>
+</div>
