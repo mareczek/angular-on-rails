@@ -1,5 +1,29 @@
+<h4> {{ currentMonth }} </h4>
+<div class="table-responsive">
+    <table class="table" align="center">
+        <thead>
+            <tr>
+                <th>Sun</th>
+                <th>Mon</th>
+                <th>Tue</th>
+                <th>Wed</th>
+                <th>Thur</th>
+                <th>Fri</th>
+                <th>Sat</th>
+               
+            </tr>
+        </thead>
+        <tbody>
 
+            <tr *ngFor="let week of weeks">
+                <td *ngFor="let day of week.days">{{ day.nr }} </td>
+                
+            </tr>
 
+        </tbody>
+
+    </table>
+</div>
 
 
 <h2> Navigation </h2>
