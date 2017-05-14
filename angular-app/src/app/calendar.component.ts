@@ -18,32 +18,36 @@ export class CalendarComponent implements OnInit {
   startingDay: number;
   days: any[];
   weeks: any[];
-  @Input() selectedDay: Date = new Date();
+  selectedDay: Date = new Date();
+  addEventFlag: boolean;
+  showAllFlag: boolean;
 
-  onClick(day : Date) {
+  addEvent() {
+    this.showAllFlag = false;
+    this.addEventFlag = !this.addEventFlag;
+    setTimeout(() => { this.addEventFlag = true }, 0);
+  }
+
+  showAllEvents() {
+    this.addEventFlag = false;
+    this.showAllFlag = true;
+    setTimeout(() => { this.showAllFlag = true }, 0);
+  }
+
+  onClick(day: Date) {
     this.selectedDay = day;
-    console.log(this.selectedDay);
-    
   }
 
 
   previousMonth() {
-    console.log('showPreviousMonth');
     this.month--;
     if (this.month == (-1)) { this.year--; this.month = 11; }
-    console.log('this month:' + this.month);
-    console.log('this.year: ' + this.year);
-    console.log('this.date =' + this.currentDate);
     this.initCalendarView(this.year, this.month);
   }
 
   nextMonth() {
-    console.log('showNextMonth')
     this.month++;
     if (this.month == 11) { this.year++; this.month = 0; }
-    console.log('this month:' + this.month);
-    console.log('this.year: ' + this.year);
-    console.log('this.date =' + this.currentDate);
     this.initCalendarView(this.year, this.month);
   }
 
@@ -70,7 +74,6 @@ export class CalendarComponent implements OnInit {
       for (var i = x; i < this.days.length; i++ , x++) {
         days.push(
           { day: this.days[i], nr: i + 1 });
-
         if (this.days[i].getDay() == 6) { x++; break; }
       }
       this.weeks.push({ days: days });
@@ -115,6 +118,7 @@ export class CalendarComponent implements OnInit {
     this.month = today.getMonth();
     this.initCalendarView(this.year, this.month);
   }
+
 
 }
 

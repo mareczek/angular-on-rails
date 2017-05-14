@@ -1,36 +1,30 @@
-
-
-    <div class="col-md-12">
-        <div *ngIf="!submitted">
-            <form (ngSubmit)="createEvent(event)" #eventForm="ngForm">
-                <div class="form-group row">
-                    <label for="title" class="col-md-2 col-form-label">Title</label>
-                    <div class="col-md-10">
-                        <input type="text" class="form-control" id="title" required name="title" #title='ngModel' [(ngModel)]="event.title">
-                    </div>
+<div class="col-md-12">
+    <div *ngIf="!submitted">
+        <form (ngSubmit)="createEvent(event)" #eventForm="ngForm">
+            <div class="form-group row">
+                <label for="title" class="col-md-2 col-form-label">Title</label>
+                <div class="col-md-8">
+                    <input type="text" class="form-control" id="title" required name="title" #title='ngModel' [(ngModel)]="event.title">
                 </div>
+            </div>
+            
+            <div class="form-group row">
+                <label for="location" class="col-md-2  col-form-label">Location</label>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" id="location" required name="location" #location='ngModel' [(ngModel)]="event.location">
+                </div>
+                <label for="date" class="col-md-1 col-form-label">Date</label>
+                <div class="col-md-3">
+                    <input class="form-control" type="text" id="example-date-input" placeholder="DD.MM.YYYY" required name="eventDate" #date='ngModel'
+                        ngModel="{{selectedDay| date: 'dd.MM.yyyy'}}" [(ngModel)]="event.eventDate">
+                </div>
+            </div>
+            <button type="Submit" class="btn btn-primary" [disabled]="!eventForm.form.valid">Submit</button>
+        </form>
+    </div>
 
-                <div class="form-group row">
-                    <label for="location" class="col-md-2 col-form-label">Location</label>
-                    <div class="col-md-4">
-                        <input type="text" class="form-control" id="location" required name="location" #location='ngModel' [(ngModel)]="event.location">
-                    </div>
+    <div *ngIf="submitted">
+        <div class="alert alert-success" role="alert">Event has been added!</div>
+    </div>
 
-                    <label for="date" class="col-md-1 col-form-label">Date</label>
-                    <div class="col-md-5">
-                        <input class="form-control" type="text"  id="example-date-input" required name="eventDate" #date='ngModel' ngModel="{{selectedDay}}" 
- [(ngModel)]= "event.eventDate">
-                         </div>
-                    </div>
-                
-                <button type="Submit" class="btn btn-primary" [disabled]="!eventForm.form.valid">Add event</button>
-            </form>
-        </div>
-
-        <div *ngIf="submitted">
-            <div class="alert alert-success" role="alert">Event has been added!</div>
-        </div>
-
-        </div>
-
-{{selectedDay}}
+</div>

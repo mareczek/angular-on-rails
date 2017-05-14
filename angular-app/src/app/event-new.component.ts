@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core'
+import { Component, Input } from '@angular/core'
 import { Event } from './event'
 import { EventService } from './event.service'
 
@@ -7,40 +7,21 @@ import { EventService } from './event.service'
     moduleId: module.id,
     selector: 'event-new',
     templateUrl: 'event-new.component.html',
+    styleUrls: ['event-new.component.css'],
+
 })
 
-
-export class EventNewComponent implements OnInit {
+export class EventNewComponent {
     event: Event = {}
-    dateNow = new Date();
     submitted: boolean = false;
-    @Input() selectedDay;
+    @Input() selectedDay: Date;
 
-
-    ngOnInit() {
-
-        console.log("init" + this.selectedDay);
-    }
-
-    constructor(private eventservice: EventService, private ref: ChangeDetectorRef ) {
-        console.log("konstruktor");
-        console.log(this.selectedDay);
-    }
+    constructor(private eventservice: EventService) { }
 
     createEvent(event: any) {
+        event.eventDate = this.selectedDay.toLocaleDateString();
         this.eventservice.createEvent(event);
-        console.log('old submit' + this.submitted);
         this.submitted = !this.submitted;
-        console.log('new submit' + this.submitted);
     }
-
-    ngOnChanges() {
-        {
-            this.ref.markForCheck();
-
-            console.log('dddddddddddd' + this.selectedDay);
-        }
-    }
-
-
 }
+

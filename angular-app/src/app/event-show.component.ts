@@ -2,8 +2,6 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Location } from '@angular/common';
-
-
 import { Event } from './event';
 import { EventService } from './event.service';
 @Component({

@@ -1,19 +1,28 @@
-.routerlinkbutton {
-    background-color: white;
-    margin-bottom: 15px;
+.daybtn {
+    margin: 5px;
+    width: 50px;
+    height: 40px;
 }
 
+.navbutton {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
 .monthbutton {
     margin: 10px;
 }
 
 .col-centered{
-    float: none;
-    margin: 0 auto;
+    margin: auto ;
+    margin-bottom: 15px;
 }
 
 table {
     border-spacing: 0px;
+     border-radius: 0px;
+    margin: 0px auto;
+    float: none;
+    margin-bottom: 15px;
 }
 
 th {

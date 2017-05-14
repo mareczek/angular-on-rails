@@ -1,38 +1,32 @@
-<button type="button" class="btn btn-primary btn-sm monthbutton" (click)="previousMonth()">Previous month</button> 
-{{currentDate|date:'MMMM, yyyy'}}
+<button type="button" class="btn btn-primary btn-sm monthbutton" (click)="previousMonth()">Previous month</button>
+<span>{{currentDate|date:'MMMM, yyyy'}}</span>
 <button class="btn btn-primary btn-sm monthbutton" (click)="nextMonth()">Next month</button>
-
 <div class="col-md-6 col-centered">
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Sun</th>
-                <th>Mon</th>
-                <th>Tue</th>
-                <th>Wed</th>
-                <th>Thu</th>
-                <th>Fri</th>
-                <th>Sat</th>
-            </tr>
-        </thead>
-        <tbody>
-            
-            <tr *ngFor="let week of weeks">
-                <td *ngFor="let day of week.days">
-                    <div *ngIf="day.day" (click)='onClick(day.day)'>
-                        <button class="btn">{{day.nr}}</button>
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <thead>
+        <tr>
+            <th>Sun</th>
+            <th>Mon</th>
+            <th>Tue</th>
+            <th>Wed</th>
+            <th>Thu</th>
+            <th>Fri</th>
+            <th>Sat</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let week of weeks">
+            <td *ngFor="let day of week.days">
+                <div *ngIf="day.day" (click)='onClick(day.day)'>
+                    <button class="btn daybtn">{{day.nr}}</button>
+                </div>
+            </td>
+        </tr>
+    </tbody>
 </div>
-<event-new hidden [selectedDay]="selectedDay"></event-new>
-<div class="row">
-    <div class="col-md-6 col-centered">
-        <h2> Navigation </h2>
-        <div class="btn  btn-primary routerlinkbutton"><a routerLink="events">All events</a> </div>
-        <div class="btn btn-primary routerlinkbutton"><a routerLink="events/new">Add Event</a></div>
-        <router-outlet></router-outlet>
-    </div>
+<div class="col-md-12">
+    <h2> Navigation </h2>
+    <button type="button" class="btn btn-primary navbutton " (click)="showAllEvents()">All events</button>
+    <button type="button" class="btn btn-primary navbutton" (click)="addEvent()">Add Event</button>
+    <events *ngIf="showAllFlag"></events>
+    <event-new *ngIf="addEventFlag" [selectedDay]="selectedDay"></event-new>
 </div>
