@@ -9,7 +9,6 @@ import * as moment from 'moment';
 
 })
 
-
 export class CalendarComponent implements OnInit {
   currentDate: Date;
   year: number;

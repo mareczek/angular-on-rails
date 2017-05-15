@@ -6,8 +6,6 @@ import { EventNewComponent } from './event-new.component'
 import { EventShowComponent } from './event-show.component'
 
 const routes: Routes = [
-  
-
     {
         path: '',
         redirectTo: '/calendar',
@@ -33,8 +31,6 @@ const routes: Routes = [
        ]
      }
     ];
-
-
 
 @NgModule({
     imports: [RouterModule.forRoot(routes)],

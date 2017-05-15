@@ -14,8 +14,7 @@ export class EventService {
 
     private URL: string = 'http://localhost:3005/events';
 
-    constructor(private http: Http) {
-    }
+    constructor(private http: Http) {}
 
     getEvents(): Promise<Event[]> {
         return this.http.get(this.URL)
@@ -23,7 +22,6 @@ export class EventService {
             .then(response => response.json() as Event[])
             .catch(this.handleError);
     }
-
 
     getEvent(id: number): Promise<Event> {
         const url = `${this.URL}/${id}`;
