@@ -4,16 +4,17 @@
     height: 40px;
 }
 
+.daybtn:hover, .daybtn:active, .daybtn:focus {
+  background-color: orange;
+}
+
 .navbutton {
     margin-top: 5px;
     margin-bottom: 5px;
 }
+
 .monthbutton {
     margin: 10px;
-}
-
-tbody {
-    outline: 1px solid black;
 }
 
 .col-centered{
@@ -21,12 +22,12 @@ tbody {
     margin-bottom: 15px;
 }
 
-table {
-    border-spacing: 0px;
-    border-radius: 0px;
-    margin: 0px auto;
-    float: none;
-    margin-bottom: 15px;
+tbody {
+    outline: 1px solid black;
+}
+
+th, td, tr {
+    text-align: center;
 }
 
 th {
@@ -35,8 +36,4 @@ th {
 
 thead {
     outline: black solid 1px !important;
-}
-
-th, td, tr {
-    text-align: center;
 }

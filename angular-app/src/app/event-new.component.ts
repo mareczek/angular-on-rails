@@ -19,7 +19,7 @@ export class EventNewComponent {
     constructor(private eventservice: EventService) { }
 
     createEvent(event: any) {
-        event.eventDate = this.selectedDay.toLocaleDateString();
+        event.eventDate = event.eventDate || this.selectedDay.toLocaleDateString();
         this.eventservice.createEvent(event);
         this.submitted = !this.submitted;
     }

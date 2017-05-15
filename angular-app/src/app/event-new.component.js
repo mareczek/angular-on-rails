@@ -17,7 +17,7 @@ var EventNewComponent = (function () {
         this.submitted = false;
     }
     EventNewComponent.prototype.createEvent = function (event) {
-        event.eventDate = this.selectedDay.toLocaleDateString();
+        event.eventDate = event.eventDate || this.selectedDay.toLocaleDateString();
         this.eventservice.createEvent(event);
         this.submitted = !this.submitted;
     };
