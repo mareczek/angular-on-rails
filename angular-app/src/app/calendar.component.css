@@ -12,6 +12,10 @@
     margin: 10px;
 }
 
+tbody {
+    outline: 1px solid black;
+}
+
 .col-centered{
     margin: auto ;
     margin-bottom: 15px;
@@ -19,7 +23,7 @@
 
 table {
     border-spacing: 0px;
-     border-radius: 0px;
+    border-radius: 0px;
     margin: 0px auto;
     float: none;
     margin-bottom: 15px;
@@ -29,7 +33,10 @@ th {
     background-color: orange;
 }
 
+thead {
+    outline: black solid 1px !important;
+}
+
 th, td, tr {
     text-align: center;
-    border: black solid 1px !important;
 }
