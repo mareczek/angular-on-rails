@@ -35,18 +35,7 @@ var CalendarComponent = (function () {
                 return true;
         }
     };
-    CalendarComponent.prototype.getAllEventsForMonth = function (month, events) {
-        var eventsArr = new Array();
-        events.then(function (events) {
-            for (var i = 0; i < events.length; i++) {
-                var date = new Date(events[i].eventDate);
-                if (date.getMonth() == month)
-                    eventsArr.push(date);
-            }
-        });
-        return eventsArr;
-    };
-    CalendarComponent.prototype.getNofWeeksforMonth = function () {
+    CalendarComponent.prototype.getNofWeeksforCurrentMonth = function () {
         if (this.days.length > 28 || this.startingDay != 1) {
             if (this.days.length == 31)
                 return 6;
@@ -56,18 +45,12 @@ var CalendarComponent = (function () {
         else
             return 4;
     };
-    CalendarComponent.prototype.setStartingOffset = function (days) {
-        //adds blank days if month doesn't start with sunday
-        for (var z = 0; z < this.startingDay; z++) {
-            days.push({ day: null, nr: null });
-        }
-    };
     CalendarComponent.prototype.previousMonth = function () {
         var month = this.showingDate.getMonth();
         var year = this.showingDate.getFullYear();
-        this.showingDate.setMonth(month - 1);
+        this.showingDate.setMonth(--month);
         if (month == (-1)) {
-            this.showingDate.setFullYear(year - 1);
+            this.showingDate.setFullYear(--year);
             this.showingDate.setMonth(11);
         }
         this.initCalendarView(this.showingDate);
@@ -75,14 +58,14 @@ var CalendarComponent = (function () {
     CalendarComponent.prototype.nextMonth = function () {
         var month = this.showingDate.getMonth();
         var year = this.showingDate.getFullYear();
-        this.showingDate.setMonth(month + 1);
+        this.showingDate.setMonth(++month);
         if (month == 11) {
-            this.showingDate.setFullYear(year + 1);
+            this.showingDate.setFullYear(++year);
             this.showingDate.setMonth(0);
         }
         this.initCalendarView(this.showingDate);
     };
-    CalendarComponent.prototype.getDaysForMonth = function () {
+    CalendarComponent.prototype.getDaysForCurrentMonth = function () {
         //fills array with days and sets startingDay
         var month = this.showingDate.getMonth();
         var year = this.showingDate.getFullYear();
@@ -95,10 +78,16 @@ var CalendarComponent = (function () {
         this.days = days;
         this.startingDay = this.days[0].getDay();
     };
+    CalendarComponent.prototype.setStartingOffset = function (days) {
+        //adds blank days if month doesn't start with sunday
+        for (var z = 0; z < this.startingDay; z++) {
+            days.push({ day: null, nr: null });
+        }
+    };
     CalendarComponent.prototype.seperateDaysInWeeks = function () {
         //fills weeks with arrays of days
         var days;
-        var nOfWeeks = this.getNofWeeksforMonth();
+        var nOfWeeks = this.getNofWeeksforCurrentMonth();
         this.weeks = [nOfWeeks];
         for (var j = 0, x = 0; j < nOfWeeks; j++) {
             days = [];
@@ -114,10 +103,21 @@ var CalendarComponent = (function () {
             this.weeks.push({ days: days });
         }
     };
+    CalendarComponent.prototype.getAllEventsForMonth = function (month, events) {
+        var eventsArr = new Array();
+        events.then(function (events) {
+            for (var i = 0; i < events.length; i++) {
+                var date = new Date(events[i].eventDate);
+                if (date.getMonth() == month)
+                    eventsArr.push(date);
+            }
+        });
+        return eventsArr;
+    };
     CalendarComponent.prototype.initCalendarView = function (date) {
         this.showingDateString = date.toDateString();
-        this.getDaysForMonth();
-        this.getNofWeeksforMonth();
+        this.getDaysForCurrentMonth();
+        this.getNofWeeksforCurrentMonth();
         this.seperateDaysInWeeks();
         this.eventsForMonth = this.getAllEventsForMonth(date.getMonth(), this.eventservice.getEvents());
     };

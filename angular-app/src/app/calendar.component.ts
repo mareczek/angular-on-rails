@@ -37,7 +37,7 @@ export class CalendarComponent implements OnInit {
     setTimeout(() => { this.showAllFlag = true }, 0);
   }
 
-   onClick(day: Date) {
+  onClick(day: Date) {
     this.selectedDay = day;
   }
 
@@ -48,20 +48,8 @@ export class CalendarComponent implements OnInit {
     }
   }
 
-  getAllEventsForMonth(month: number, events: Promise<Event[]>) {
-    var eventsArr = new Array<Date>();
-    events.then(events => {
-      for (var i = 0; i < events.length; i++) {
-        var date = new Date(events[i].eventDate);
 
-        if (date.getMonth() == month)
-          eventsArr.push(date);
-      }
-    })
-    return eventsArr;
-  }
-
-   getNofWeeksforMonth() {
+  getNofWeeksforCurrentMonth() {
     if (this.days.length > 28 || this.startingDay != 1) {
       if (this.days.length == 31) return 6;
       else return 5;
@@ -69,35 +57,26 @@ export class CalendarComponent implements OnInit {
     else return 4;
   }
 
-  setStartingOffset(days: any[]) {
-    //adds blank days if month doesn't start with sunday
-    for (var z = 0; z < this.startingDay; z++) {
-      days.push({ day: null, nr: null });
-    }
-  }
 
   previousMonth() {
     var month = this.showingDate.getMonth();
     var year = this.showingDate.getFullYear();
-    this.showingDate.setMonth(month - 1);
+    this.showingDate.setMonth(--month);
 
-    if (month == (-1)) { this.showingDate.setFullYear(year - 1); this.showingDate.setMonth(11); }
+    if (month == (-1)) { this.showingDate.setFullYear(--year); this.showingDate.setMonth(11); }
     this.initCalendarView(this.showingDate);
   }
 
   nextMonth() {
     var month = this.showingDate.getMonth();
     var year = this.showingDate.getFullYear();
-    this.showingDate.setMonth(month + 1);
-    if (month == 11) { this.showingDate.setFullYear(year + 1); this.showingDate.setMonth(0); }
+    this.showingDate.setMonth(++month);
+    if (month == 11) { this.showingDate.setFullYear(++year); this.showingDate.setMonth(0); }
     this.initCalendarView(this.showingDate);
   }
 
 
-  
-
-
-  getDaysForMonth() {
+  getDaysForCurrentMonth() {
     //fills array with days and sets startingDay
     var month = this.showingDate.getMonth();
     var year = this.showingDate.getFullYear();
@@ -112,11 +91,17 @@ export class CalendarComponent implements OnInit {
     this.startingDay = this.days[0].getDay();
   }
 
+  setStartingOffset(days: any[]) {
+    //adds blank days if month doesn't start with sunday
+    for (var z = 0; z < this.startingDay; z++) {
+      days.push({ day: null, nr: null });
+    }
+  }
 
   seperateDaysInWeeks() {
     //fills weeks with arrays of days
     var days: any;
-    var nOfWeeks = this.getNofWeeksforMonth();
+    var nOfWeeks = this.getNofWeeksforCurrentMonth();
     this.weeks = [nOfWeeks];
 
     for (var j = 0, x = 0; j < nOfWeeks; j++) {
@@ -133,11 +118,24 @@ export class CalendarComponent implements OnInit {
     }
   }
 
+  getAllEventsForMonth(month: number, events: Promise<Event[]>) {
+    var eventsArr = new Array<Date>();
+    events.then(events => {
+      for (var i = 0; i < events.length; i++) {
+        var date = new Date(events[i].eventDate);
+
+        if (date.getMonth() == month)
+          eventsArr.push(date);
+      }
+    })
+    return eventsArr;
+  }
+
 
   initCalendarView(date: Date) {
     this.showingDateString = date.toDateString();
-    this.getDaysForMonth();
-    this.getNofWeeksforMonth();
+    this.getDaysForCurrentMonth();
+    this.getNofWeeksforCurrentMonth();
     this.seperateDaysInWeeks()
     this.eventsForMonth = this.getAllEventsForMonth(date.getMonth(), this.eventservice.getEvents())
   }
