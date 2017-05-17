@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import * as moment from 'moment';
+import { Event } from './event'
+import { EventService } from './event.service'
 
 @Component({
   moduleId: module.id,
@@ -10,16 +12,18 @@ import * as moment from 'moment';
 })
 
 export class CalendarComponent implements OnInit {
-  currentDate: Date;
-  year: number;
-  month: number;
-  weekAmount: number;
+  showingDate: Date;
+  selectedDay: Date;
+  showingDateString: string;
   startingDay: number;
   days: any[];
   weeks: any[];
-  selectedDay: Date = new Date();
   addEventFlag: boolean;
   showAllFlag: boolean;
+  eventsForMonth: Date[];
+
+
+  constructor(private eventservice: EventService) { }
 
   addEvent() {
     this.showAllFlag = false;
@@ -33,39 +37,65 @@ export class CalendarComponent implements OnInit {
     setTimeout(() => { this.showAllFlag = true }, 0);
   }
 
-  onClick(day: Date) {
-    this.selectedDay = day;
+  markDayIfHasEvent(day: Date) {
+    for (var i = 0; i < this.eventsForMonth.length; i++) {
+      if (this.eventsForMonth[i].toDateString() == day.toDateString())
+        return true;
+    }
   }
 
+  getAllEventsForMonth(month: number, events: Promise<Event[]>) {
+    var eventsArr = new Array<Date>();
+    events.then(events => {
+      for (var i = 0; i < events.length; i++) {
+        var date = new Date(events[i].eventDate);
+
+        if (date.getMonth() == month)
+          eventsArr.push(date);
+      }
+    })
+    return eventsArr;
+  }
+
+  onClick(day: Date) {
+    this.selectedDay = day;
+
+  }
 
   previousMonth() {
-    this.month--;
-    if (this.month == (-1)) { this.year--; this.month = 11; }
-    this.initCalendarView(this.year, this.month);
+    var month = this.showingDate.getMonth();
+    var year = this.showingDate.getFullYear();
+    this.showingDate.setMonth(month - 1);
+
+    if (month == (-1)) { this.showingDate.setFullYear(year - 1); this.showingDate.setMonth(11); }
+    this.initCalendarView(this.showingDate);
   }
 
   nextMonth() {
-    this.month++;
-    if (this.month == 11) { this.year++; this.month = 0; }
-    this.initCalendarView(this.year, this.month);
+    var month = this.showingDate.getMonth();
+    var year = this.showingDate.getFullYear();
+    this.showingDate.setMonth(month + 1);
+    if (month == 11) { this.showingDate.setFullYear(year + 1); this.showingDate.setMonth(0); }
+    this.initCalendarView(this.showingDate);
   }
 
 
 
-  getWeeksforMonth() {
+  getNofWeeksforMonth() {
     if (this.days.length > 28 || this.startingDay != 1) {
-      if (this.days.length == 31) this.weekAmount = 6;
-      else this.weekAmount = 5;
+      if (this.days.length == 31) return  6;
+      else return 5;
     }
-    else this.weekAmount = 4;
+    else return 4;
   }
 
   seperateDaysForWeeks() {
     //fills weeks with arrays of days
     var days: any;
-    this.weeks = [this.weekAmount];
+    var nOfWeeks = this.getNofWeeksforMonth();
+    this.weeks = [nOfWeeks];
 
-    for (var j = 0, x = 0; j < this.weekAmount; j++) {
+    for (var j = 0, x = 0; j < nOfWeeks; j++) {
       days = [];
 
       if (j == 0) this.setStartingOffset(days);
@@ -90,11 +120,11 @@ export class CalendarComponent implements OnInit {
 
   getDaysForMonth() {
     //fills array with days and sets startingDay
-    var month = this.currentDate.getMonth();
-    var year = this.currentDate.getFullYear();
-
+    var month = this.showingDate.getMonth();
+    var year = this.showingDate.getFullYear();
     var date = new Date(year, month, 1);
     var days = [];
+
     while (date.getMonth() === month) {
       days.push(new Date(date));
       date.setDate(date.getDate() + 1);
@@ -104,21 +134,20 @@ export class CalendarComponent implements OnInit {
   }
 
 
-  initCalendarView(year: number, month: number, day = 1) {
-    this.currentDate = new Date(year, month, day);
+  initCalendarView(date: Date) {
+    this.showingDateString = date.toDateString();
     this.getDaysForMonth();
-    this.getWeeksforMonth();
+    this.getNofWeeksforMonth();
     this.seperateDaysForWeeks()
+    this.eventsForMonth = this.getAllEventsForMonth(date.getMonth(), this.eventservice.getEvents())
   }
 
   ngOnInit() {
-    var today = new Date();
-    this.year = today.getFullYear();
-    this.month = today.getMonth();
-    this.initCalendarView(this.year, this.month);
+    var month = new Date().getMonth();
+    var year = new Date().getFullYear();
+    this.showingDate = new Date(year, month, 1);
+    this.initCalendarView(this.showingDate);
   }
-
-
 }
 
 

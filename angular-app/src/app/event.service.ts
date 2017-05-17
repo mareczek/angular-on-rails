@@ -35,7 +35,7 @@ export class EventService {
         return this.http
             .post(this.URL, JSON.stringify({ event }), { headers: this.headers })
             .toPromise()
-            .then(res => res.json().data as Event)
+            .then(res => res.json() as Event)
             .catch(this.handleError);
     }
 

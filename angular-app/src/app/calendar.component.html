@@ -1,5 +1,5 @@
 <button type="button" class="btn btn-primary btn-sm monthbutton" (click)="previousMonth()">Previous month</button>
-<span>{{currentDate|date:'MMMM, yyyy'}}</span>
+<span>{{date|date:'MMMM, yyyy'}}</span>
 <button class="btn btn-primary btn-sm monthbutton" (click)="nextMonth()">Next month</button>
 <div class="col-md-6 col-centered ">
     <thead>
@@ -17,7 +17,8 @@
         <tr *ngFor="let week of weeks">
             <td *ngFor="let day of week.days">
                 <div *ngIf="day.day" (click)='onClick(day.day)'>
-                    <button class="btn daybtn">{{day.nr}}</button>
+                    <button class="btn daybtn"
+                    [style.font-weight]="markDayIfHasEvent(day.day) ? 'bold' : 'normal'">{{day.nr}}</button>
                 </div>
             </td>
         </tr>

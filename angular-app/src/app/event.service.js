@@ -37,7 +37,7 @@ var EventService = (function () {
         return this.http
             .post(this.URL, JSON.stringify({ event: event }), { headers: this.headers })
             .toPromise()
-            .then(function (res) { return res.json().data; })
+            .then(function (res) { return res.json(); })
             .catch(this.handleError);
     };
     EventService.prototype.handleError = function (error) {

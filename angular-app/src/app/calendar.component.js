@@ -5,10 +5,14 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 var core_1 = require("@angular/core");
+var event_service_1 = require("./event.service");
 var CalendarComponent = (function () {
-    function CalendarComponent() {
-        this.selectedDay = new Date();
+    function CalendarComponent(eventservice) {
+        this.eventservice = eventservice;
     }
     CalendarComponent.prototype.addEvent = function () {
         var _this = this;
@@ -22,40 +26,62 @@ var CalendarComponent = (function () {
         this.showAllFlag = true;
         setTimeout(function () { _this.showAllFlag = true; }, 0);
     };
+    CalendarComponent.prototype.markDayIfHasEvent = function (day) {
+        for (var i = 0; i < this.eventsForMonth.length; i++) {
+            if (this.eventsForMonth[i].toDateString() == day.toDateString())
+                return true;
+        }
+    };
+    CalendarComponent.prototype.getAllEventsForMonth = function (month, events) {
+        var eventsArr = new Array();
+        events.then(function (events) {
+            for (var i = 0; i < events.length; i++) {
+                var date = new Date(events[i].eventDate);
+                if (date.getMonth() == month)
+                    eventsArr.push(date);
+            }
+        });
+        return eventsArr;
+    };
     CalendarComponent.prototype.onClick = function (day) {
         this.selectedDay = day;
     };
     CalendarComponent.prototype.previousMonth = function () {
-        this.month--;
-        if (this.month == (-1)) {
-            this.year--;
-            this.month = 11;
+        var month = this.showingDate.getMonth();
+        var year = this.showingDate.getFullYear();
+        this.showingDate.setMonth(month - 1);
+        if (month == (-1)) {
+            this.showingDate.setFullYear(year - 1);
+            this.showingDate.setMonth(11);
         }
-        this.initCalendarView(this.year, this.month);
+        this.initCalendarView(this.showingDate);
     };
     CalendarComponent.prototype.nextMonth = function () {
-        this.month++;
-        if (this.month == 11) {
-            this.year++;
-            this.month = 0;
+        var month = this.showingDate.getMonth();
+        var year = this.showingDate.getFullYear();
+        this.showingDate.setMonth(month + 1);
+        if (month == 11) {
+            this.showingDate.setFullYear(year + 1);
+            this.showingDate.setMonth(0);
         }
-        this.initCalendarView(this.year, this.month);
+        this.initCalendarView(this.showingDate);
     };
-    CalendarComponent.prototype.getWeeksforMonth = function () {
+    CalendarComponent.prototype.getNofWeeksforMonth = function () {
         if (this.days.length > 28 || this.startingDay != 1) {
             if (this.days.length == 31)
-                this.weekAmount = 6;
+                return 6;
             else
-                this.weekAmount = 5;
+                return 5;
         }
         else
-            this.weekAmount = 4;
+            return 4;
     };
     CalendarComponent.prototype.seperateDaysForWeeks = function () {
         //fills weeks with arrays of days
         var days;
-        this.weeks = [this.weekAmount];
-        for (var j = 0, x = 0; j < this.weekAmount; j++) {
+        var nOfWeeks = this.getNofWeeksforMonth();
+        this.weeks = [nOfWeeks];
+        for (var j = 0, x = 0; j < nOfWeeks; j++) {
             days = [];
             if (j == 0)
                 this.setStartingOffset(days);
@@ -77,8 +103,8 @@ var CalendarComponent = (function () {
     };
     CalendarComponent.prototype.getDaysForMonth = function () {
         //fills array with days and sets startingDay
-        var month = this.currentDate.getMonth();
-        var year = this.currentDate.getFullYear();
+        var month = this.showingDate.getMonth();
+        var year = this.showingDate.getFullYear();
         var date = new Date(year, month, 1);
         var days = [];
         while (date.getMonth() === month) {
@@ -88,18 +114,18 @@ var CalendarComponent = (function () {
         this.days = days;
         this.startingDay = this.days[0].getDay();
     };
-    CalendarComponent.prototype.initCalendarView = function (year, month, day) {
-        if (day === void 0) { day = 1; }
-        this.currentDate = new Date(year, month, day);
+    CalendarComponent.prototype.initCalendarView = function (date) {
+        this.showingDateString = date.toDateString();
         this.getDaysForMonth();
-        this.getWeeksforMonth();
+        this.getNofWeeksforMonth();
         this.seperateDaysForWeeks();
+        this.eventsForMonth = this.getAllEventsForMonth(date.getMonth(), this.eventservice.getEvents());
     };
     CalendarComponent.prototype.ngOnInit = function () {
-        var today = new Date();
-        this.year = today.getFullYear();
-        this.month = today.getMonth();
-        this.initCalendarView(this.year, this.month);
+        var month = new Date().getMonth();
+        var year = new Date().getFullYear();
+        this.showingDate = new Date(year, month, 1);
+        this.initCalendarView(this.showingDate);
     };
     return CalendarComponent;
 }());
@@ -109,7 +135,8 @@ CalendarComponent = __decorate([
         selector: 'calendar',
         templateUrl: 'calendar.component.html',
         styleUrls: ['calendar.component.css'],
-    })
+    }),
+    __metadata("design:paramtypes", [event_service_1.EventService])
 ], CalendarComponent);
 exports.CalendarComponent = CalendarComponent;
 //# sourceMappingURL=calendar.component.js.map
