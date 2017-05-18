@@ -15,7 +15,6 @@ import { DateToStringPipe } from './dateToString.pipe'
 export class CalendarComponent implements OnInit {
   showingDate: Date;
   selectedDay: Date;
-  showingDateString: string;
   startingDay: number;
   eventsForMonth: Date[];
   days: any[];
@@ -130,8 +129,6 @@ export class CalendarComponent implements OnInit {
 
 
   initCalendarView(date: Date) {
-    console.log(date);
-    this.showingDateString = date.toDateString();
     this.getDaysForCurrentMonth();
     this.getNofWeeksforCurrentMonth();
     this.seperateDaysInWeeks()

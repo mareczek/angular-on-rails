@@ -115,8 +115,6 @@ var CalendarComponent = (function () {
         return eventsArr;
     };
     CalendarComponent.prototype.initCalendarView = function (date) {
-        console.log(date);
-        this.showingDateString = date.toDateString();
         this.getDaysForCurrentMonth();
         this.getNofWeeksforCurrentMonth();
         this.seperateDaysInWeeks();
