@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms'
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpModule } from '@angular/http';
-
+import { DateToStringPipe } from './dateToString.pipe'
 import { EventService } from './event.service'
 
 import { CalendarComponent } from './calendar.component';
@@ -18,10 +18,12 @@ import { EventShowComponent } from './event-show.component'
   imports: [BrowserModule,
     AppRoutingModule,
     FormsModule, HttpModule,
-    NgbModule.forRoot()],
+    NgbModule.forRoot(),
+  ],
 
   declarations: [AppComponent, CalendarComponent,
-    EventComponent, EventNewComponent, EventShowComponent],
+    EventComponent, EventNewComponent, EventShowComponent,
+    DateToStringPipe],
   bootstrap: [AppComponent],
   providers: [EventService]
 })

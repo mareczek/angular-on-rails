@@ -1,5 +1,5 @@
 <button type="button" class="btn btn-primary btn-sm monthbutton" (click)="previousMonth()">Previous month</button>
-<span>{{showingDateString|date:'MMMM, yyyy'}}</span>
+<span>{{showingDate | dateToString | date:'MMMM, yyyy'}}</span>
 <button class="btn btn-primary btn-sm monthbutton" (click)="nextMonth()">Next month</button>
 <div class="col-md-6 col-centered ">
     <thead>

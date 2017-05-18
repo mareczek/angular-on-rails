@@ -10,6 +10,7 @@ var platform_browser_1 = require("@angular/platform-browser");
 var forms_1 = require("@angular/forms");
 var ng_bootstrap_1 = require("@ng-bootstrap/ng-bootstrap");
 var http_1 = require("@angular/http");
+var dateToString_pipe_1 = require("./dateToString.pipe");
 var event_service_1 = require("./event.service");
 var calendar_component_1 = require("./calendar.component");
 var app_component_1 = require("./app.component");
@@ -27,9 +28,11 @@ AppModule = __decorate([
         imports: [platform_browser_1.BrowserModule,
             app_routing_module_1.AppRoutingModule,
             forms_1.FormsModule, http_1.HttpModule,
-            ng_bootstrap_1.NgbModule.forRoot()],
+            ng_bootstrap_1.NgbModule.forRoot(),
+        ],
         declarations: [app_component_1.AppComponent, calendar_component_1.CalendarComponent,
-            event_component_1.EventComponent, event_new_component_1.EventNewComponent, event_show_component_1.EventShowComponent],
+            event_component_1.EventComponent, event_new_component_1.EventNewComponent, event_show_component_1.EventShowComponent,
+            dateToString_pipe_1.DateToStringPipe],
         bootstrap: [app_component_1.AppComponent],
         providers: [event_service_1.EventService]
     })

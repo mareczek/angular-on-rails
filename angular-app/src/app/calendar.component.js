@@ -107,7 +107,7 @@ var CalendarComponent = (function () {
         var eventsArr = new Array();
         events.then(function (events) {
             for (var i = 0; i < events.length; i++) {
-                var date = new Date(events[i].eventDate);
+                var date = new Date(events[i].eventDate); //from string to Date conversion
                 if (date.getMonth() == month)
                     eventsArr.push(date);
             }
@@ -115,6 +115,7 @@ var CalendarComponent = (function () {
         return eventsArr;
     };
     CalendarComponent.prototype.initCalendarView = function (date) {
+        console.log(date);
         this.showingDateString = date.toDateString();
         this.getDaysForCurrentMonth();
         this.getNofWeeksforCurrentMonth();

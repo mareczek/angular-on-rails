@@ -1,7 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import * as moment from 'moment';
 import { Event } from './event'
 import { EventService } from './event.service'
+import { DateToStringPipe } from './dateToString.pipe'
 
 @Component({
   moduleId: module.id,
@@ -21,7 +22,6 @@ export class CalendarComponent implements OnInit {
   weeks: any[];
   addEventFlag: boolean;
   showAllFlag: boolean;
-
 
   constructor(private eventservice: EventService) { }
 
@@ -48,7 +48,6 @@ export class CalendarComponent implements OnInit {
     }
   }
 
-
   getNofWeeksforCurrentMonth() {
     if (this.days.length > 28 || this.startingDay != 1) {
       if (this.days.length == 31) return 6;
@@ -56,7 +55,6 @@ export class CalendarComponent implements OnInit {
     }
     else return 4;
   }
-
 
   previousMonth() {
     var month = this.showingDate.getMonth();
@@ -122,8 +120,7 @@ export class CalendarComponent implements OnInit {
     var eventsArr = new Array<Date>();
     events.then(events => {
       for (var i = 0; i < events.length; i++) {
-        var date = new Date(events[i].eventDate);
-
+        var date = new Date(events[i].eventDate); //from string to Date conversion
         if (date.getMonth() == month)
           eventsArr.push(date);
       }
@@ -133,6 +130,7 @@ export class CalendarComponent implements OnInit {
 
 
   initCalendarView(date: Date) {
+    console.log(date);
     this.showingDateString = date.toDateString();
     this.getDaysForCurrentMonth();
     this.getNofWeeksforCurrentMonth();
