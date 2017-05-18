@@ -2,7 +2,7 @@
 
  1. Set up rails on localhost 3005:
 ```
-cd rails_events
+cd events_rails
 rails s -p 3005 &
 ```
 2. Set up npm:
